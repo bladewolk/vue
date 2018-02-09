@@ -42,13 +42,10 @@
                 axios.post('api/login', this.form.getFields())
                     .then(response => {
                         this.$localStorage.set('token', response.data.token)
-                        this.$store.commit('login', {
-                            token: response.data.token,
-                            authenticated: true
-                        })
+                        this.$store.commit('login', response.data.token)
                         this.$router.push('/')
                     })
-                    .catch(e => console.log('Error when log in'))
+                    .catch(e => console.error('error when log in', e))
             },
         }
     }

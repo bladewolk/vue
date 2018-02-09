@@ -36,10 +36,11 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
+        sleep(1);
         $this->validate($request, [
             'title' => 'required|min:3|max:255',
-            'type' => 'required',
-            'description' => 'required|max:300'
+//            'type' => 'required',
+//            'description' => 'required|max:300'
         ]);
 
         $todo = Todo::create($request->all());
@@ -89,6 +90,7 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
+        sleep(1);
         return [
             'result' => Todo::find($id)->delete()
         ];

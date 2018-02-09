@@ -16,9 +16,7 @@
 <body>
 <div class="container" id="app">
     <app-layout>
-
         <router-view slot="router-outlet"></router-view>
-
     </app-layout>
 </div>
 </body>

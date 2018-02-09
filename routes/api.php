@@ -16,9 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::middleware('checkToken')->group(function () {
 
 });
-Route::post('checkAuth', 'Api\AuthController@checkAuth');
 Route::post('login', 'Api\AuthController@login');
 Route::resource('todo', 'Api\TodoController');

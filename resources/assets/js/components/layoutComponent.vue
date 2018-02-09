@@ -11,6 +11,7 @@
                         <div class="navbar-start">
                             <a href="#" class="navbar-item" @click="logout">Logout</a>
                             <router-link class="navbar-item" to="/">Home</router-link>
+                            <router-link class="navbar-item" to="/todos">Todos</router-link>
                         </div>
                         <!-- navbar start, navbar end -->
                     </div>
@@ -23,6 +24,9 @@
             </nav>
 
         </header>
+
+        <modal v-if="serverError"></modal>
+
         <main>
             <slot name="router-outlet"></slot>
         </main>
@@ -37,16 +41,29 @@
 
     export default {
         computed: mapState({
-            auth: state => state.auth.authenticated,
-
+            auth: state => state.access_token ? true : false,
+            globalFetch: state => state.globalFetch,
+            serverError: state => state.serverError
         }),
+
+        components: {
+            'modal': require('./ModalWindow')
+        },
+
         methods: {
             logout: function () {
                 this.$localStorage.remove('token')
                 this.$store.commit('logout')
                 this.$router.push('login')
             }
+        },
+        watch: {
+            auth: function (val) {
+                if (val == false)
+                    this.$router.push('login')
+            }
         }
+
     }
 
 </script>
