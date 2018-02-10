@@ -2,7 +2,7 @@
     <article class="message is-primary column is-3">
         <div class="message-header">
             <p>{{ item.title }}</p>
-            <button class="delete" aria-label="delete"></button>
+            <button class="delete" aria-label="delete" @click="$emit('remove', item.id)"></button>
         </div>
         <div class="message-body">
             {{ item.description }}

@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="modal is-active" @click="close">
+        <div class="modal is-active" @click="closeModal">
             <div class="modal-background"></div>
             <div class="modal-content">
 
@@ -9,7 +9,7 @@
                         <div class="media-content">
                             <div class="content">
                                 <p>
-                                    Server Error. CODE:500
+                                    {{ message }}
                                 </p>
                             </div>
                         </div>
@@ -21,11 +21,16 @@
     </transition>
 </template>
 <script>
+    import {mapMutations, mapState} from 'vuex'
+
     export default {
+        computed: mapState({
+            message: state => state.server.message
+        }),
         methods: {
-            close: function () {
-                this.$store.commit('closeModal')
-            }
+            ...mapMutations([
+                'closeModal'
+            ])
         },
     }
 </script>

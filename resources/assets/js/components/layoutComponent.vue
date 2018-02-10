@@ -13,6 +13,9 @@
                             <router-link class="navbar-item" to="/">Home</router-link>
                             <router-link class="navbar-item" to="/todos">Todos</router-link>
                         </div>
+                        <div class="navbar-end">
+                            <router-link class="navbar-item" to="/settings">Settings</router-link>
+                        </div>
                         <!-- navbar start, navbar end -->
                     </div>
                     <button class="button navbar-burger">
@@ -38,12 +41,14 @@
 
 <script>
     import {mapState} from 'vuex'
+    import {mapMutations} from 'vuex'
+
 
     export default {
         computed: mapState({
             auth: state => !!state.auth.access_token,
             globalFetch: state => state.globalFetch,
-            serverError: state => state.serverError
+            serverError: state => state.server.error,
         }),
 
         components: {
@@ -51,11 +56,9 @@
         },
 
         methods: {
-            logout: function () {
-                this.$localStorage.remove('token');
-                this.$store.commit('logout');
-                this.$router.push('login');
-            }
+            ...mapMutations([
+                'logout'
+            ])
         },
         watch: {
             auth: function (val) {

@@ -7,7 +7,7 @@
                     v-for="(item, index) of todos"
                     v-bind:item="item"
                     :key="index"
-                    @click.native="remove(item.id)"
+                    @remove="remove"
             ></todo-item>
         </div>
     </div>
@@ -15,6 +15,8 @@
 <script>
     import {mapActions} from 'vuex'
     import {mapState} from 'vuex'
+    import {mapMutations} from 'vuex'
+
 
     export default {
         components: {
@@ -33,6 +35,9 @@
         }),
 
         methods: {
+            ...mapMutations([
+                // 'removeTodo'
+            ]),
             ...mapActions([
                 'getTodos',
                 'removeTodo'
@@ -40,21 +45,21 @@
 
             remove: function (id) {
                 this.fetch = true;
-                this.removeTodo(id)
-                    .then(resolve => {
-                        this.fetch = false
-                    })
+                this.removeTodo(id).then(resolve => {
+                    this.fetch = false
+                })
             }
         },
 
         beforeRouteEnter(to, from, next) {
             next((vm) => {
-                vm.fetch = true;
-                vm.getTodos().then((res, err) => {
-                    vm.fetch = false
-                }, err => {
-                    vm.fetch = false
-                })
+                vm.getTodos()
+                // vm.fetch = true;
+                // vm.getTodos().then((res, err) => {
+                //     vm.fetch = false
+                // }, err => {
+                //     vm.fetch = false
+                // })
             });
         }
     }

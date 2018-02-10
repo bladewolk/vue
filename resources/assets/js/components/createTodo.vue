@@ -16,7 +16,7 @@
             </div>
             <p class="help is-danger" v-show="form.errors.has('description')">{{ form.errors.get('description') }}</p>
         </div>
-        <button type="submit" v-bind:class="{ 'is-loading' : sending }" class="button is-link">Store</button>
+        <button type="submit" class="button is-link" :class="{ 'is-loading' : sending }">Store</button>
     </form>
 </template>
 <script>
@@ -37,8 +37,8 @@
         methods: {
             create: function () {
                 this.sending = true;
-
-                this.store(this.form.getFields())
+                // console.log('create', this.sending);
+                this.storeTodo(this.form.getFields())
                     .then(res => {
                         this.form.reset();
                         this.sending = false
@@ -50,9 +50,9 @@
                     })
             },
 
-            ...mapActions({
-                store: 'storeTodo'
-            }),
+            ...mapActions([
+                'storeTodo'
+            ]),
         }
     }
 </script>

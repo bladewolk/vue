@@ -1,26 +1,16 @@
 import Vue from 'vue';
-import VueLocalStorage from 'vue-localstorage'
-import VueRouter from 'vue-router'
 import {router} from './routes/index'
 import store from './store/index'
-
-import layoutComponent from './components/layoutComponent'
-import {mapState} from 'vuex'
-
-Vue.use(VueLocalStorage)
-Vue.use(VueRouter)
-
-Vue.component('app-layout', layoutComponent);
+import layout from './components/layoutComponent'
 
 
 const vm = new Vue({
+    components: {
+        'app-layout': layout
+    },
     router,
     store,
     localStorage: {},
-
-    computed: mapState({
-        globalFetch: state => state.globalFetch,
-    }),
 
     methods: {
 
@@ -32,15 +22,20 @@ const vm = new Vue({
     },
 
     beforeCreate: function () {
-        store.commit('getToken', Vue.localStorage.get('token'));
-        if (!store.state.auth.access_token)
-            router.push('login')
+        let path = window.location.hash.slice(2);
+        let token = store.state.auth.access_token;
+
+        if (!token)
+            router.push('login');
+
+        if (token && path === 'login')
+            router.push('/')
     },
 
     watch: {
         '$route'(to, from) {
             if (!store.state.auth.access_token)
-                router.push('login')
+                router.push('login');
 
             if (store.state.auth.access_token && to.path === '/login')
                 router.push('/')

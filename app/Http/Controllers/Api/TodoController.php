@@ -36,7 +36,7 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        sleep(1);
+//        sleep(1);
         $this->validate($request, [
             'title' => 'required|min:3|max:255',
 //            'type' => 'required',

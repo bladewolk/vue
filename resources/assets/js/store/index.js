@@ -2,8 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './modules/auth'
 import todo from './modules/todo'
+// import VueLocalStorage from "vue-localstorage";
+import VueLocalStorage from 'vue-ls';
 
+
+Vue.use(VueLocalStorage);
 Vue.use(Vuex);
+
 
 export default new Vuex.Store({
 
@@ -13,8 +18,18 @@ export default new Vuex.Store({
     },
 
     state: {
+        server: {
+            error: null,
+            message: null
+        },
         serverError: false,
         globalFetch: false,
+    },
+
+    getters: {
+        getAccessToken: state => {
+            return state.auth.access_token
+        }
     },
 
     mutations: {
@@ -23,12 +38,14 @@ export default new Vuex.Store({
         },
 
         toggleServerError(state, error = '') {
-            state.serverError = !state.serverError
+            state.server.error = !state.server.error;
+            state.server.message = error
         },
 
         closeModal(state) {
-            state.serverError = false
+            state.server.error = false
         },
-    }
+    },
+
 });
 
