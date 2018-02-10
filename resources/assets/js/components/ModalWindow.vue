@@ -9,8 +9,7 @@
                         <div class="media-content">
                             <div class="content">
                                 <p>
-                                    Something whent wrong on server
-                                    This place for message
+                                    Server Error. CODE:500
                                 </p>
                             </div>
                         </div>
@@ -18,7 +17,6 @@
                 </div>
 
             </div>
-            <button class="modal-close is-large" aria-label="close" @click="close"></button>
         </div>
     </transition>
 </template>

@@ -1,11 +1,11 @@
 <template>
-    <article class="message is-primary">
+    <article class="message is-primary column is-3">
         <div class="message-header">
             <p>{{ item.title }}</p>
             <button class="delete" aria-label="delete"></button>
         </div>
         <div class="message-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis
+            {{ item.description }}
         </div>
     </article>
 </template>

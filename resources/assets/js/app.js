@@ -1,21 +1,19 @@
 import Vue from 'vue';
-import Vuex from 'vuex'
 import VueLocalStorage from 'vue-localstorage'
 import VueRouter from 'vue-router'
 import {router} from './routes/index'
-import vuexStore from './store/index'
+import store from './store/index'
 
 import layoutComponent from './components/layoutComponent'
 import {mapState} from 'vuex'
 
 Vue.use(VueLocalStorage)
 Vue.use(VueRouter)
-Vue.use(Vuex)
-Vue.component('app-layout', layoutComponent)
-const store = new Vuex.Store(vuexStore)
+
+Vue.component('app-layout', layoutComponent);
 
 
-var vm = new Vue({
+const vm = new Vue({
     router,
     store,
     localStorage: {},
@@ -34,18 +32,18 @@ var vm = new Vue({
     },
 
     beforeCreate: function () {
-        this.$store.commit('getToken', Vue.localStorage.get('token'))
-        if (!this.$store.state.access_token)
-            this.$router.push('login')
+        store.commit('getToken', Vue.localStorage.get('token'));
+        if (!store.state.auth.access_token)
+            router.push('login')
     },
 
     watch: {
         '$route'(to, from) {
-            if (!this.$store.state.access_token)
-                this.$router.push('login')
+            if (!store.state.auth.access_token)
+                router.push('login')
 
-            if (this.$store.state.access_token && to.path == '/login')
-                this.$router.push('/')
+            if (store.state.auth.access_token && to.path === '/login')
+                router.push('/')
 
         },
     }

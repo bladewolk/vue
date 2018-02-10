@@ -41,7 +41,7 @@
 
     export default {
         computed: mapState({
-            auth: state => state.access_token ? true : false,
+            auth: state => !!state.auth.access_token,
             globalFetch: state => state.globalFetch,
             serverError: state => state.serverError
         }),
@@ -52,14 +52,14 @@
 
         methods: {
             logout: function () {
-                this.$localStorage.remove('token')
-                this.$store.commit('logout')
-                this.$router.push('login')
+                this.$localStorage.remove('token');
+                this.$store.commit('logout');
+                this.$router.push('login');
             }
         },
         watch: {
             auth: function (val) {
-                if (val == false)
+                if (val === false)
                     this.$router.push('login')
             }
         }

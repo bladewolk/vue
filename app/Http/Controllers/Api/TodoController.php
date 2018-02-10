@@ -40,7 +40,7 @@ class TodoController extends Controller
         $this->validate($request, [
             'title' => 'required|min:3|max:255',
 //            'type' => 'required',
-//            'description' => 'required|max:300'
+            'description' => 'required|max:300'
         ]);
 
         $todo = Todo::create($request->all());
@@ -91,8 +91,9 @@ class TodoController extends Controller
     public function destroy($id)
     {
         sleep(1);
-        return [
+
+        return response([
             'result' => Todo::find($id)->delete()
-        ];
+        ]);
     }
 }
