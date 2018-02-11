@@ -16,8 +16,10 @@ use Illuminate\Http\Request;
 Route::post('login', 'Api\AuthController@login');
 Route::post('register', 'Api\AuthController@register');
 
-Route::middleware('auth:api')->group(function () {
-    Route::resource('todo', 'Api\TodoController');
+Route::middleware('auth:api')->namespace('Api')->group(function () {
+    Route::resource('todo', 'TodoController');
 
+    Route::get('settings', 'SettingsController@index');
+    Route::post('settings', 'SettingsController@update');
 });
 

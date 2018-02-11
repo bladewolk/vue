@@ -1,16 +1,16 @@
 <template>
     <article class="message is-primary column is-3">
         <div class="message-header">
-            <p>{{ item.title }}</p>
+            <p>{{ item.created_at }}</p>
             <button class="delete" aria-label="delete" @click="$emit('remove', item.id)"></button>
         </div>
         <div class="message-body">
-            {{ item.description }}
+            {{ item.body }}
         </div>
     </article>
 </template>
 <script>
     export default {
-        props: ['item'],
+        props: ['item']
     }
 </script>

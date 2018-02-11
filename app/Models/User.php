@@ -48,4 +48,14 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function todo()
+    {
+        return $this->hasMany(Todo::class);
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(UserSetting::class);
+    }
 }

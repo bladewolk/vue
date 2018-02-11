@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Todo extends Model
+class UserSetting extends Model
 {
     protected $fillable = [
-        'body',
+        'hour_rate',
+        'exchange_rate'
+    ];
+
+    protected $guarded = [
         'user_id'
     ];
 }

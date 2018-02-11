@@ -1,8 +1,19 @@
 const state = {
-    todos: []
+    todos: [],
+    pagination: {
+        current_page: null,
+        last_page: null
+    }
 };
 
 const mutations = {
+    updatePagination(state, payload) {
+        state.pagination = {
+            current_page: payload.current_page,
+            last_page: payload.last_page
+        }
+    },
+
     loadTodo(state, todos) {
         state.todos = todos
     },
@@ -19,7 +30,7 @@ const mutations = {
 };
 
 const actions = {
-    storeTodo({commit, getters}, payload) {
+    storeTodo({commit, getters, dispatch}, payload) {
         return new Promise((resolve, reject) => {
                 axios.post('api/todo',
                     payload,
@@ -33,37 +44,34 @@ const actions = {
                     })
                     .catch(e => {
                         reject(e.response);
-                        if (e.response.status === 500)
-                            commit('toggleServerError')
+                        dispatch('handleError', e.response)
                     })
             }
         )
     },
 
-    getTodos({commit, getters}) {
+    getTodos({commit, getters, dispatch}, page = 1) {
+        console.log(page);
         return new Promise((resolve, reject) => {
-            axios.get('api/todo', {
+            axios.get('api/todo?page=' + page, {
                 headers: {
                     'Authorization': getters.getAccessToken
                 }
             })
                 .then(response => {
                     resolve(response);
-                    commit('loadTodo', response.data)
+                    commit('loadTodo', response.data.data);
+                    commit('updatePagination', response.data)
                 })
                 .catch(e => {
                     reject();
-                    if (e.response.status === 401) {
-                        commit('toggleServerError', 'Unauthorized!');
-                        // commit('logout')
-                    }
-
+                    dispatch('handleError', e.response)
                 })
         })
     }
     ,
 
-    removeTodo({commit, getters}, id) {
+    removeTodo({commit, getters, dispatch}, id) {
         return new Promise((resolve, reject) => {
             axios.delete('api/todo/' + id, {
                 headers: {
@@ -75,7 +83,8 @@ const actions = {
                     commit('removeTodo', id)
                 })
                 .catch(e => {
-                    reject()
+                    reject();
+                    dispatch('handleError', e.response)
                 })
         })
     }

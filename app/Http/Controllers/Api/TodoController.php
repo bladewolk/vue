@@ -15,7 +15,9 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return Todo::latest()->get();
+        $user = auth('api')->user();
+
+        return $user->todo()->latest()->paginate(20);
     }
 
     /**
@@ -36,14 +38,13 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth('api')->user();
 //        sleep(1);
         $this->validate($request, [
-            'title' => 'required|min:3|max:255',
-//            'type' => 'required',
-            'description' => 'required|max:300'
+            'body' => 'required|min:3|max:255',
         ]);
 
-        $todo = Todo::create($request->all());
+        $todo = $user->todo()->create($request->all());
 
         return $todo;
     }

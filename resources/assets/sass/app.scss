@@ -17,6 +17,25 @@
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
+{
   opacity: 0;
+}
+
+div {
+  &.is-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.5;
+    &:after {
+      @include loader;
+      position: absolute;
+      top: calc(50% - 2.5em);
+      left: calc(50% - 2.5em);
+      width: 5em;
+      height: 5em;
+      border-width: 0.25em;
+    }
+  }
 }

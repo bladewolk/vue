@@ -22,23 +22,23 @@ const vm = new Vue({
     },
 
     beforeCreate: function () {
-        let path = window.location.hash.slice(2);
-        let token = store.state.auth.access_token;
-
-        if (!token)
-            router.push('login');
-
-        if (token && path === 'login')
-            router.push('/')
+        // let path = window.location.hash.slice(2);
+        // let token = store.state.auth.access_token;
+        //
+        // if (!token)
+        //     router.push('login');
+        //
+        // if (token && path === 'login')
+        //     router.push('/')
     },
 
     watch: {
         '$route'(to, from) {
-            if (!store.state.auth.access_token)
-                router.push('login');
-
-            if (store.state.auth.access_token && to.path === '/login')
-                router.push('/')
+            // if (!store.state.auth.access_token)
+            //     router.push('login');
+            //
+            // if (store.state.auth.access_token && to.path === '/login')
+            //     router.push('/')
 
         },
     }

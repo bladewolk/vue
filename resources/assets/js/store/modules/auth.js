@@ -10,6 +10,7 @@ const mutations = {
     },
 
     login(state, token) {
+        localStorage.setItem('access_token', token);
         state.access_token = token
     },
 
@@ -28,7 +29,6 @@ const actions = {
             axios.post('api/login', payload)
                 .then(res => {
                     let token = 'Bearer ' + res.data.token;
-                    localStorage.setItem('access_token', token);
                     commit('login', token);
                     resolve()
                 })
@@ -43,7 +43,6 @@ const actions = {
             axios.post('api/register', payload)
                 .then(res => {
                     let token = 'Bearer ' + res.data.token;
-                    localStorage.setItem('access_token', token);
                     commit('login', token);
                     resolve(res)
                 })

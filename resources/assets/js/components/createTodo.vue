@@ -2,20 +2,14 @@
     <form @submit.prevent="create">
 
         <div class="field">
-            <label class="label">Title</label>
+            <label class="label">Body</label>
             <div class="control">
-                <input class="input" type="text" placeholder="Title" v-model="form.title">
+                <input class="input" type="text" placeholder="Body" v-model="form.body">
             </div>
-            <p class="help is-danger" v-show="form.errors.has('title')">{{ form.errors.get('title') }}</p>
+            <p class="help is-danger" v-show="form.errors.has('body')">{{ form.errors.get('body') }}</p>
         </div>
 
-        <div class="field">
-            <label class="label">Description</label>
-            <div class="control">
-                <input class="input" type="text" placeholder="Descr" v-model="form.description">
-            </div>
-            <p class="help is-danger" v-show="form.errors.has('description')">{{ form.errors.get('description') }}</p>
-        </div>
+
         <button type="submit" class="button is-link" :class="{ 'is-loading' : sending }">Store</button>
     </form>
 </template>
@@ -27,8 +21,7 @@
         data: function () {
             return {
                 form: new Form({
-                    title: '',
-                    description: ''
+                    body: '',
                 }),
                 sending: false
             }

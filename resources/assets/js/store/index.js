@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './modules/auth'
 import todo from './modules/todo'
+import settings from './modules/setting'
 // import VueLocalStorage from "vue-localstorage";
 import VueLocalStorage from 'vue-ls';
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
 
     modules: {
         auth,
-        todo
+        todo,
+        settings
     },
 
     state: {
@@ -46,6 +48,18 @@ export default new Vuex.Store({
             state.server.error = false
         },
     },
+
+    actions: {
+        //Handle axios response error
+        handleError({commit}, response) {
+            if (response.status === 401) {
+                commit('toggleServerError', 'Unauthorized!');
+                commit('logout')
+            }
+            if (response.status === 500)
+                commit('toggleServerError', 'Server error')
+        }
+    }
 
 });
 
